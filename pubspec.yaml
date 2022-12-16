@@ -43,6 +43,7 @@ dependencies:
   custom_info_window: ^1.0.1
 
   flutter_slidable: ^2.0.0
+  percent_indicator: ^4.2.2
 
 dev_dependencies:
   flutter_test:

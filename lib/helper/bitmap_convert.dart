@@ -40,15 +40,23 @@ class BitmapConvert {
     int size,
   ) async {
 
+    /// Đoạn này là mình define Canvas để chuẩn bị vẽ và khởi tạo loại màu để fill lên hình tròn
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint1 = Paint()..color = Colors.orangeAccent;
     final Paint paint2 = Paint()..color = Colors.white;
 
+    /// Chỗ này là hàm có sẵn của Canvas giúp vẽ hình tròn
+    /// Ở đây mình vẽ 3 hình tròn để lấy được border bên ngoài hình tròn
+    /// Mình chỉ việc đưa vào:
+    /// Offset: Tọa độ (dx,dy)
+    /// size/2.0: bán kính hình tròn
+    /// paint1: màu sẽ fill lên hình tròn đó
     canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
     canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint2);
     canvas.drawCircle(Offset(size / 2, size / 2), size / 2.2, paint1);
 
+    /// Chỗ này sẽ tạo text số lượng marker được group
     TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
     painter.text = TextSpan(
       text: text,
@@ -58,11 +66,12 @@ class BitmapConvert {
           fontWeight: FontWeight.normal),
     );
     painter.layout();
+
+    /// Xong rồi gán vào hàm paint để vẽ hình tròn với text ở giữa
     painter.paint(
       canvas,
       Offset(size / 2 - painter.width / 2, size / 2 - painter.height / 2),
     );
-
     ui.Image img = await pictureRecorder.endRecording().toImage(size, size);
     ByteData? data = await img.toByteData(format: ui.ImageByteFormat.png);
 

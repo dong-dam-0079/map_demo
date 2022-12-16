@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_demo/helper/bitmap_convert.dart';
+import 'package:map_demo/model/place_model.dart';
 import 'package:map_demo/view/google_map/controller/map_controller.dart';
 
 class GoogleMapView extends StatefulWidget {

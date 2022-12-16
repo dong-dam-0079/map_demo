@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,40 +13,52 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Slidable Example',
       home: Scaffold(
-        body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) => _buildItemList(index),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildItemList(int index) {
-    return Slidable(
-      key: const ValueKey(0),
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        dismissible: DismissiblePane(
-          onDismissed: () {},
-        ),
-        children: const [
-          SlidableAction(
-            onPressed: doNothing,
-            backgroundColor: Color(0xFF7BC043),
-            foregroundColor: Colors.white,
-            icon: Icons.archive,
+        body: SafeArea(
+          child: Center(
+            child: TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 1200),
+              curve: Curves.easeInOut,
+              tween: Tween<double>(
+                begin: 0,
+                end: 0.7,
+              ),
+              builder: (context, value, _) => Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(26),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 5,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: LinearProgressIndicator(
+                        value: value,
+                        color: Colors.green,
+                        backgroundColor: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 25,
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(26),
+                          topRight: Radius.circular(26),
+                        ),
+                        color: Colors.white.withOpacity(0.2)),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ],
-      ),
-      child: Container(
-        width: double.infinity,
-        // padding: const EdgeInsets.all(16),
-        height: 80,
-        color: Colors.lightBlueAccent,
-        child: Text('Slide me $index'),
+        ),
       ),
     );
   }
 }
-
-void doNothing(BuildContext context) {}
